@@ -1,0 +1,1693 @@
+#:kivy 1.9.0
+# -*- coding: utf-8 -*-
+
+<PopupForm>
+    BoxLayout
+        Popup:
+            id: popupForm
+            size_hint: (None, None)
+            title_align: "center"
+            title_size: "20sp"
+            size: 400, 200
+            pos_hint: {'center_x': 0.5, 'y': 0.4}
+            BoxLayout:
+                orientation: "vertical"
+                padding: 12
+                spacing: 12
+                Image:
+                    source: "resources/background/anterior.png"
+                Label:
+                    id: labelPopup
+                    #size_hint_y: 50
+                Button:
+                    text: "Cerrar"
+                    #size_hint_y: 25
+                    on_press: root.close_popup()
+<MainForm>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout
+        orientation: "vertical"
+        padding: 12
+        spacing: 12
+        size: root.size
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 12
+            spacing: 12
+            size_hint: 1, .5
+            #Body
+            ActionBar:
+                pos_hint: {'top':1}
+                ActionView:
+                    use_separator: True
+                    ActionPrevious:
+                        app_icon: 'resources/icons/Logo_Sportech37_magenta_mini_only.png'
+                        with_previous: False
+                    ActionOverflow:
+                    ActionGroup:
+                        text: '   Engarde   '
+                        mode: 'spinner'
+                        ActionButton:
+                            text: ' Conectar '
+                            on_press: root.action_bar_connection_to_engarde()
+                        ActionButton:
+                            text: ' Desconectar '
+                            on_press: root.action_bar_disconnect_connection_to_engarde()
+                        ActionButton:
+                            text: ' Combate\n Siguiente '
+                            on_press: root.change_combat_in_engarde(1)
+                        ActionButton:
+                            text: ' Combate\n Anterior '
+                            on_press: root.change_combat_in_engarde(2)
+                        ActionButton:
+                            text: ' Invertir \n Competidores '
+                    ActionGroup:
+                        text: '   Videoref   '
+                        mode: 'spinner'
+                        ActionButton:
+                            text: '  Conectar  '
+                            on_press: root.action_bar_connection_to_videoref()
+                        ActionButton:
+                            text: '  Desconectar  '
+                            on_press: root.action_bar_disconnect_connection_to_videoref()
+                        ActionButton:
+                            text: '  Coordinate  '
+                            on_press: root.send_coordinates_videoref()
+                        ActionButton:
+                            text: '  Hello  '
+                            on_press: root.send_hello_videoref()
+                        ActionButton:
+                            text: '  Disp  '
+        BoxLayout:
+            #orientation: "horizontal"
+            padding: 12
+            spacing: 12
+            size_hint: 1, 4
+            #TextInput:
+                #id: console
+                #readonly: True
+                #multiline: True
+                #background_color: .1, .1, .1, 1
+                #foreground_color: .9, .6, .1, 1
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgb: .1, .1, .1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    id: console
+                    markup: True
+                    text_size: self.width, None
+                    size_hint_y: None
+                    height: self.texture_size[1]
+            TabbedPanel:
+                do_default_tab: False
+                TabbedPanelItem:
+                    text: 'Engarde'
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: 12
+                        spacing: 12
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .4
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Conexión[/b][/color]'
+                                size_hint: .3, 1
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Acciones[/b][/color]'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Switch:
+                                id: switch_engarde_connection
+                                active: False
+                                size_hint: .7, 1
+                            Button:
+                                on_press: root.change_combat_in_engarde(2)
+                                text: "Combate anterior"
+                            Button:
+                                text: 'Invertir competidores'
+                            Button:
+                                on_press: root.change_combat_in_engarde(1)
+                                text: 'Combate Siguiente'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .1
+                            Label:
+                                canvas.before:
+                                    Color:
+                                        rgb: .6, .6, .6
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .3
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Ip[/b][/color]'
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Puerto de escucha[/b][/color]'
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Puerto de envio[/b][/color]'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .6
+                            TextInput:
+                                id: ip_engarde
+                                text: ""
+                                readonly: False
+                                multiline: False
+                                border: 6, 6, 6, 6
+                                background_color: .1, .1, .1, 1
+                                foreground_color: .9, .6, .1, 1
+                            TextInput:
+                                id: port_received_engarde
+                                text: ""
+                                readonly: False
+                                multiline: False
+                                border: 6, 6, 6, 6
+                                background_color: .1, .1, .1, 1
+                                foreground_color: .9, .6, .1, 1
+                            TextInput:
+                                id: port_send_engarde
+                                text: "50100"
+                                readonly: False
+                                multiline: False
+                                border: 6, 6, 6, 6
+                                background_color: .1, .1, .1, 1
+                                foreground_color: .9, .6, .1, 1
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, 3
+                            Button:
+                                size_hint: 1, .2
+                                text: "guardar"
+                                on_press: root.save_configuration_app_engarde()
+                TabbedPanelItem:
+                    text: 'Videoref'
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: 12
+                        spacing: 12
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .4
+                            Label:
+                                markup: True
+                                size_hint: .4, .4
+                                text: '[color=f4d03f][b]Conexión[/b][/color]'
+                            Label:
+                                markup: True
+                                size_hint: .2, .4
+                                text: '[color=f4d03f][b]Actualizar engarde[/b][/color]'
+                            Label:
+                                markup: True
+                                size_hint: 1, .4
+                                text: '[color=f4d03f][b]Acciones[/b][/color]'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Switch:
+                                id: switch_videoref_connection
+                                size_hint: .3, 1
+                                active: False
+                            Switch:
+                                id: switch_update_data_engarde
+                                size_hint: .4, 1
+                                active: False
+                            Button:
+                                text: "Coordinate"
+                                size_hint: .3, 1
+                                on_press: root.send_coordinates_videoref()
+                            Button:
+                                text: "Hello"
+                                size_hint: .3, 1
+                                on_press: root.send_hello_videoref()
+                            Button:
+                                text: "Disp"
+                                size_hint: .3, 1
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .1
+                            Label:
+                                canvas.before:
+                                    Color:
+                                        rgb: .6, .6, .6
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .2
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Ip[/b][/color]'
+                            Label:
+                                markup: True
+                                text: '[color=f4d03f][b]Puerto de escucha inicial[/b][/color]'
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .8
+                            TextInput:
+                                id: ip_videoref
+                                text: ""
+                                readonly: False
+                                multiline: False
+                                border: 6, 6, 6, 6
+                                background_color: .1, .1, .1, 1
+                                foreground_color: .9, .6, .1, 1
+                            TextInput:
+                                id: port_inicial_videoref
+                                text: ""
+                                readonly: False
+                                multiline: False
+                                border: 6, 6, 6, 6
+                                background_color: .1, .1, .1, 1
+                                foreground_color: .9, .6, .1, 1
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, 4
+                            Button:
+                                size_hint: 1, .2
+                                text: "guardar"
+                                on_press: root.save_configuration_app_videoref()
+
+                TabbedPanelItem:
+                    text: 'Grilla'
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: 12, 12
+                        row_default_height: '40dp'
+                        row_force_default: True
+                        spacing: 12, 12
+                        ScrollView:
+                            scroll_type:['bars']
+                            bar_width: '10dp'
+                            GridLayout:
+                                id: configuration_result_container
+                                cols: 1
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 40, 40
+                                row_default_height: '30dp'
+                                row_force_default: True
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tipo de combate:[/b][/color]"
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    ToggleButton:
+                                        id: change_wisget_combat_couple
+                                        text: 'Pareja'
+                                        group: 'widgetcontainer'
+                                        on_press: root.change_widget_result_combat("couple")
+                                    ToggleButton:
+                                        id: change_wisget_combat_team
+                                        text: 'Equipo'
+                                        group: 'widgetcontainer'
+                                        on_press: root.change_widget_result_combat("team")
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Cotejamiento:[/b][/color]"
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    ToggleButton:
+                                        id: encoding_default
+                                        text: 'Utf8'
+                                        group: 'encoding'
+                                        on_press: root.encoding_grrid_result("Default")
+                                    ToggleButton:
+                                        id: encoding_chinese
+                                        text: 'Chino'
+                                        group: 'encoding'
+                                        on_press: root.encoding_grrid_result("Chinese")
+                                    ToggleButton:
+                                        id: encoding_japanese
+                                        text: 'Japonés'
+                                        group: 'encoding'
+                                        on_press: root.encoding_grrid_result("Japanese")
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Titulo del campeonato:[/b][/color]"
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Campeonato:[/b][/color]"
+                                    TextInput:
+                                        id: input_title_combat
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Button:
+                                        id: button_title_combat
+                                        size_hint: .3, 1
+                                        text: "Mostrar"
+                                        on_press: root.value_title_combat()
+
+
+
+                                #Modificacion nombre de atletas inicio
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Nombre Esgrimistas:[/b][/color]"
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Esgrimista 1:[/b][/color]"
+                                    TextInput:
+                                        id: input_title_combat_1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Esgrimista 2:[/b][/color]"
+                                    TextInput:
+                                        id: input_title_combat_2
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Button:
+                                        id: button_title_combat_1
+                                        size_hint: .3, 1
+                                        text: "Mostrar"
+                                        on_press: root.show_athlete_1()
+
+                                #Modificacion nombre de atletas fin
+
+
+                                #Modificacion nombre de equipo inicio
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Nombre Equipos:[/b][/color]"
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Equipo 1:[/b][/color]"
+                                    TextInput:
+                                        id: input_team_1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Equipo 2:[/b][/color]"
+                                    TextInput:
+                                        id: input_team_2
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    orientation: 'horizontal'
+                                    Button:
+                                        id: button_input_team
+                                        size_hint: .3, 1
+                                        text: "Mostrar"
+                                        on_press: root.show_team_1()
+
+                                #Modificacion nombre de equipo fin
+
+
+
+
+                                BoxLayout:
+                                    id:title_configuration_font
+                                    orientation: 'vertical'
+                                    BoxLayout:
+                                        orientation: 'horizontal'
+                                        Label:
+                                            markup: True
+                                            text: "[color=f4d03f][b]Configuración de letra:[/b][/color]"
+                                #pareja
+                                BoxLayout:
+                                    id: configuration_name_athlete_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del nombre:[/b][/color]"
+                                    TextInput:
+                                        id: font_size_name_athlete
+                                        text: "32"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Longitud del nombre:[/b][/color]"
+                                    TextInput:
+                                        id: length_name_athlete
+                                        text: "60"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: configuration_timer_match_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del tiempo:[/b][/color]"
+                                    TextInput:
+                                        id: timer_font_size
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del match:[/b][/color]"
+                                    TextInput:
+                                        id: match_font_size
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: configuration_point_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño de los puntos:[/b][/color]"
+                                    TextInput:
+                                        id: points_font_size
+                                        text: "40"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del titulo campeonato:[/b][/color]"
+                                    TextInput:
+                                        id: font_size_title_combat
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        border: 6, 6, 6, 6
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                #equipo
+                                BoxLayout:
+                                    id: configuration_name_athlete_team
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño de los\n nombres (atletas):[/b][/color]"
+                                    TextInput:
+                                        id: size_name_athlete_team
+                                        text: "20"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Longitud de los\n nombres (atleta):[/b][/color]"
+                                    TextInput:
+                                        id: length_name_athlete_team
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        border: 6, 6, 6, 6
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: configuration_name_team
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño de los\n nombres (equipo):[/b][/color]"
+                                    TextInput:
+                                        id: size_name_team
+                                        text: "20"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Longitud de los\n nombre (equipo):[/b][/color]"
+                                    TextInput:
+                                        id: length_name_team
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        border: 6, 6, 6, 6
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: configuration_points_tean
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño de los\n puntos (atleta):[/b][/color]"
+                                    TextInput:
+                                        id: size_points_athlete_team
+                                        text: "25"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño de los\n puntos (equipo):[/b][/color]"
+                                    TextInput:
+                                        id: size_points_team
+                                        text: "25"
+                                        size_hint: .2, 1
+                                        border: 6, 6, 6, 6
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: configuration_timer_macht_tean
+                                    orientation: 'horizontal'
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del tiempo:[/b][/color]"
+                                    TextInput:
+                                        id: size_timer_team
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        input_filter: "int"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Label:
+                                        size_hint: .5, 1
+                                        markup: True
+                                        text: "[color=f4d03f][b]Tamaño del match:[/b][/color]"
+                                    TextInput:
+                                        id: size_match_team
+                                        text: "30"
+                                        size_hint: .2, 1
+                                        border: 6, 6, 6, 6
+                                        input_filter: "int"
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    id: title_configuration_pos
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: "[color=f4d03f][b]Configuración de posiciones:[/b][/color]"
+                                BoxLayout:
+                                    id: box_coutry_left_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Bandera izquierda[/b][/color]'
+                                    Slider:
+                                        id: country_flag_left_x
+                                        orientation:'horizontal'
+                                        min: -36.54
+                                        max: 442.77
+                                    TextInput:
+                                        id: country_flag_left_x_text
+                                        text: "-26.36"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: country_flag_left_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 25.19
+                                    TextInput:
+                                        id: country_flag_left_y_text
+                                        text: "11.0"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_name_athlete_left_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Nombre izquierda[/b][/color]'
+                                    Slider:
+                                        id: name_athlete_left_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 286.28
+                                    TextInput:
+                                        id: name_athlete_left_x_text
+                                        text: "116.88"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_athlete_left_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 38.67
+                                    TextInput:
+                                        id: name_athlete_left_y_text
+                                        text: "17.0"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_light_left_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Luz izquierda[/b][/color]'
+                                    Slider:
+                                        id: light_athlete_left_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 522.19
+                                    TextInput:
+                                        id: light_athlete_left_x_text
+                                        text: "406.47"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: light_athlete_left_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 31.93
+                                    TextInput:
+                                        id: light_athlete_left_y_text
+                                        text: "10.16"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_punctuation_left_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Puntuación izquierda[/b][/color]'
+                                    Slider:
+                                        id: punctuation_left_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 461.53
+                                    TextInput:
+                                        id: punctuation_left_x_text
+                                        text: "454.79"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: punctuation_left_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 18.45
+                                    TextInput:
+                                        id: punctuation_left_y_text
+                                        text: "3.73"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                #derecha
+                                BoxLayout:
+                                    id: box_coutry_right_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Bandera derecha[/b][/color]'
+                                    Slider:
+                                        id: country_flags_right_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 421.09
+                                    TextInput:
+                                        id: country_flags_right_x_text
+                                        text: "419.35"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: country_flags_right_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 25.19
+                                    TextInput:
+                                        id: country_flags_right_y_text
+                                        text: "9.00"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_name_athlete_right_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Nombre derecha[/b][/color]'
+                                    Slider:
+                                        id: name_athlete_right_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 272.8
+                                    TextInput:
+                                        id: name_athlete_right_x_text
+                                        text: "161.91"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_athlete_right_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 38.67
+                                    TextInput:
+                                        id: name_athlete_right_y_text
+                                        text: "16.6"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_punctuation_rift_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Puntuación derecha[/b][/color]'
+                                    Slider:
+                                        id: punctuation_athlete_rift_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 400
+                                    TextInput:
+                                        id: punctuation_athlete_rift_x_text
+                                        text: "5.0"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: punctuation_athlete_rift_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 13.28
+                                    TextInput:
+                                        id: punctuation_athlete_rift_y_text
+                                        text: "3.27"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_light_right_couple
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Luz derecha[/b][/color]'
+                                    Slider:
+                                        id: light_right_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 501.97
+                                    TextInput:
+                                        id: light_right_x_text
+                                        text: "110.43"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: light_right_y
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 34.25
+                                    TextInput:
+                                        id: light_right_y_text
+                                        text: "10.0"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                #box slider equipo
+                                BoxLayout:
+                                    id: box_country_left_team
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Bandera izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: country_flags_left_x_team
+                                        orientation:'horizontal'
+                                        min: -46.67
+                                        max: 455.85
+                                    TextInput:
+                                        id: country_flags_left_x_text_team
+                                        text: "-38.43"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: country_flags_left_y_team
+                                        orientation:'horizontal'
+                                        min: -6.48
+                                        max: 0.26
+                                    TextInput:
+                                        id: country_flags_left_y_text_team
+                                        text: "-3.39"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_name_athlete_left
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Nombre athleta\n izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: name_athlete_left_pos_x_team
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 316.67
+                                    TextInput:
+                                        id: name_athlete_left_pos_x_text_team
+                                        text: "100.99"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_athlete_left_pos_y_team
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 15.63
+                                    TextInput:
+                                        id: name_athlete_left_pos_y_text_team
+                                        text: "4.39"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_light_athlete_left
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Luz izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: light_left_pos_x_team
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 527.79
+                                    TextInput:
+                                        id: light_left_pos_x_text_team
+                                        text: "385.49"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: light_left_pos_y_team
+                                        orientation:'horizontal'
+                                        min: -8.11
+                                        max: 6
+                                    TextInput:
+                                        id: light_left_pos_y_text_team
+                                        text: "00.00"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_punctuation_athlete_left
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Puntuación atleta\n izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: punctuation_left_pos_x_team
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 460.39
+                                    TextInput:
+                                        id: punctuation_left_pos_x_text_team
+                                        text: "452.9"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: punctuation_left_pos_y_team
+                                        orientation:'horizontal'
+                                        min: -11.23
+                                        max: -5.46
+                                    TextInput:
+                                        id: punctuation_left_pos_y_text_team
+                                        text: "-7.56"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    id: box_name_team_combat
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Nombre del equipo\n izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: name_team_left_pos_x
+                                        orientation:'horizontal'
+                                        min: -120.0
+                                        max: 192.23
+                                    TextInput:
+                                        id: name_team_left_pos_x_text
+                                        text: "0.01"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_team_left_pos_y
+                                        orientation:'horizontal'
+                                        min: -8.6
+                                        max: 8.17
+                                    TextInput:
+                                        id: name_team_left_pos_y_text
+                                        text: "0.01"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_points_team_combat
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Puntos del equipo\n izquierda[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: ponits_team_left_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 460.39
+                                    TextInput:
+                                        id: ponits_team_left_pos_x_text
+                                        text: "452.9"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: ponits_team_left_pos_y
+                                        orientation:'horizontal'
+                                        min: -9.65
+                                        max: -4.93
+                                    TextInput:
+                                        id: ponits_team_left_pos_y_text
+                                        text: "-7.03"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_points_team_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Puntos del athleta\n derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: ponits_athlete_team_right_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 445.41
+                                    TextInput:
+                                        id: ponits_athlete_team_right_pos_x_text
+                                        text: "00.00"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: ponits_athlete_team_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -9.13
+                                        max: -6.51
+                                    TextInput:
+                                        id: ponits_athlete_team_right_pos_y_text
+                                        text: "-7.56"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_light_team_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Luz derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: light_team_right_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 505.32
+                                    TextInput:
+                                        id: light_team_right_pos_x_text
+                                        text: "108.4"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: light_team_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -9.13
+                                        max: 8.17
+                                    TextInput:
+                                        id: light_team_right_pos_y_text
+                                        text: "-0.74"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_name_athlete_team_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Nombre del atleta\n derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: name_athlete_team_right_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 295.62
+                                    TextInput:
+                                        id: name_athlete_team_right_pos_x_text
+                                        text: "160.82"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_athlete_team_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -4.41
+                                        max: 16.03
+                                    TextInput:
+                                        id: name_athlete_team_right_pos_y_text
+                                        text: "5.55"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                BoxLayout:
+                                    id: box_country_flags_team_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Bandera derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: country_flags_team_right_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 430.43
+                                    TextInput:
+                                        id: country_flags_team_right_pos_x_text
+                                        text: "422.94"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: country_flags_team_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -8.08
+                                        max: -0.22
+                                    TextInput:
+                                        id: country_flags_team_right_pos_y_text
+                                        text: "-3.36"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    id: box_team_points_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Puntos del equipo\n derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: points_team_combat_right_pos_x
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 445.41
+                                    TextInput:
+                                        id: points_team_combat_right_pos_x_text
+                                        text: "0.32"
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: points_team_combat_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -9.65
+                                        max: -6.51
+                                    TextInput:
+                                        id: points_team_combat_right_pos_y_text
+                                        text: "-8.08"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                BoxLayout:
+                                    id: box_name_team_combat_right
+                                    orientation: 'horizontal'
+                                    Label:
+                                        text: '[color=f4d03f][b]Nombre del equipo\n derecha[/b][/color]'
+                                        markup: True
+                                    Slider:
+                                        id: name_team_right_pos_x
+                                        orientation:'horizontal'
+                                        min: -200
+                                        max: 160.82
+                                    TextInput:
+                                        id: name_team_right_pos_x_text
+                                        text: "0.01"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: name_team_right_pos_y
+                                        orientation:'horizontal'
+                                        min: -9.67
+                                        max: 8.75
+                                    TextInput:
+                                        id: name_team_right_pos_y_text
+                                        text: "00.00"
+                                        size_hint: .4, 1
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+
+                                #barra
+                                BoxLayout:
+                                    id: box_bar_combat
+                                    orientation: 'horizontal'
+                                    Label:
+                                        markup: True
+                                        text: '[color=f4d03f][b]Barra campeonato[/b][/color]'
+                                    Slider:
+                                        id: width_title_bar
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 1000
+                                    TextInput:
+                                        id: width_title_bar_text
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                                    Slider:
+                                        id: size_title_bar
+                                        orientation:'horizontal'
+                                        min: 0
+                                        max: 1000
+                                    TextInput:
+                                        id: size_title_bar_text
+                                        size_hint: .4, 1
+                                        input_filter: "float"
+                                        border: 6, 6, 6, 6
+                                        background_color: .1, .1, .1, 1
+                                        foreground_color: .9, .6, .1, 1
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint: 1, .1
+                            Button:
+                                text: "guardar"
+                                on_press: root.save_configuration_app_screen()
+        BoxLayout:
+            id: box_notify
+            size_hint: 1, .4
+            Label:
+                id: notify
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                text: "El videoref no responde"
+        BoxLayout:
+            id: widget_combat_container
+            orientation: "vertical"
+            BoxLayout:
+                id: widget_combat_couple
+                orientation: "horizontal"
+                padding: 12
+                spacing: 12
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 12
+                    spacing: 12
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'resources/background/Interfaz_de_streaming-01.png'
+                    ScatterLayout:
+                        id: scatter_layout_left
+                        do_translation_y: False
+                        do_translation_x: False
+                        Image:
+                            id: countryLeft
+                            country_flags_left_x: .01
+                            country_flags_left_y: .04
+                            pos: (self.country_flags_left_x, self.country_flags_left_y)
+                            size_hint: .3, .7
+                        Label:
+                            id: nameAthleteLeft
+                            font_size_name_left: "40sp"
+                            font_size: self.font_size_name_left
+                            name_left_translation_x: 100
+                            name_left_translation_y: 10
+                            pos: (self.name_left_translation_x, self.name_left_translation_y)
+                            size_hint: .5, .4
+                        Image:
+                            id: light_left
+                            light_left_translation_x: 410
+                            light_left_translation_y: 10
+                            pos: (self.light_left_translation_x, self.light_left_translation_y)
+                            size_hint: .1, .6
+                            source: 'resources/background/luz_neutra.png'
+                        Label:
+                            id: pointsLeft
+                            font_size_points_left: "40sp"
+                            font_size: self.font_size_points_left
+                            points_left_translation_x: 450
+                            points_left_translation_y: 2
+                            pos: (self.points_left_translation_x, self.points_left_translation_y)
+                            size_hint: .2, .9
+                            canvas.before:
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                    source: 'resources/background/Interfaz_de_streaming-02.png'
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: .2, 1
+                    Label:
+                        id: timer
+                        font_size_timer: "30sp"
+                        font_size: self.font_size_timer
+                        text: "00:00"
+                        size_hint: 1, 4
+                        pos: (900, 100)
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-04.png'
+                    Label:
+                        id: match
+                        match_font_size: "30sp"
+                        font_size: self.match_font_size
+                        text: "0"
+                        size_hint: 1, 4
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-05.png'
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 12
+                    spacing: 12
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size:self.size
+                            source: 'resources/background/Interfaz_de_streaming-06.png'
+                    ScatterLayout:
+                        id: scatter_layout_right
+                        do_translation_y: False
+                        do_translation_x: False
+                        Label:
+                            id: pointsRight
+                            font_size_points_right: "40sp"
+                            font_size: self.font_size_points_right
+                            points_right_translation_x: 2
+                            points_right_translation_y: 2
+                            pos: (self.points_right_translation_x, self.points_right_translation_y)
+                            size_hint: .2, .9
+                            canvas.before:
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                    source: 'resources/background/Interfaz_de_streaming-07.png'
+                        Image:
+                            id: light_right
+                            light_right_translation_x: 110
+                            light_right_translation_y: 7
+                            pos: (self.light_right_translation_x, self.light_right_translation_y)
+                            size_hint: .1, .6
+                            source: 'resources/background/luz_neutra.png'
+                        Label:
+                            id: nameAthleteRight
+                            font_size_name_right:  "40sp"
+                            font_size: self.font_size_name_right
+                            name_right_translation_x: 130
+                            name_right_translation_y: 10
+                            pos: (self.name_right_translation_x, self.name_right_translation_y)
+                            size_hint: .5, .4
+                        Image:
+                            id: countryRight
+                            country_flags_right_x: 400
+                            country_flags_right_y: 6
+                            pos: (self.country_flags_right_x, self.country_flags_right_y)
+                            size_hint: .3, .7
+            BoxLayout:
+                id: widget_combat_team
+                orientation: "horizontal"
+                padding: 12
+                spacing: 12
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: 12
+                        spacing: 12
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-01.png'
+                        ScatterLayout:
+                            id: scatter_layout_left_team
+                            do_translation_y: False
+                            do_translation_x: False
+                            Image:
+                                id: country_flags_left_team_pos
+                                country_flags_left_team_pos_x: -40
+                                country_flags_left_team_pos_y: -4
+                                pos: (self.country_flags_left_team_pos_x, self.country_flags_left_team_pos_y )
+                                size_hint: .3, 1.4
+                                source: "resources/flags/flags_inclined/FIN-izquierda.png"
+                            Label:
+                                id: athlete_name_pos_team
+                                athlete_name_pos_x_team: 100
+                                athlete_name_pos_y_team: 10
+                                text: "PAIS  NOMBRE ATLETA"
+                                size_name_team_athlete: "20sp"
+                                font_size: self.size_name_team_athlete
+                                pos: (self.athlete_name_pos_x_team, self.athlete_name_pos_y_team)
+                                size_hint: .5, .4
+                            Image:
+                                id: light_left_pos_team
+                                light_left_pos_x_team: 410
+                                light_left_pos_y_team: .1
+                                pos: (self.light_left_pos_x_team, self.light_left_pos_y_team)
+                                size_hint: .1, 1
+                                source: 'resources/background/luz_verde.png'
+                            Label:
+                                id: points_left_pos_team
+                                text: "0"
+                                font_size_points_left: "20sp"
+                                font_size: self.font_size_points_left
+                                points_left_pos_x_team:450
+                                points_left_pos_y_team: -7
+                                pos: (self.points_left_pos_x_team, self.points_left_pos_y_team)
+                                size_hint: .2, 1.8
+                                canvas.before:
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        source: 'resources/background/Interfaz_de_streaming-02.png'
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: 12
+                        spacing: 12
+                        canvas.before:
+                            Rectangle:
+                                pos: (self.pos[0] + 30, self.pos[1])
+                                size: (self.size[0] - 30, self.size[1])
+                                source: 'resources/background/Interfaz_de_streaming-01.png'
+                        ScatterLayout:
+                            id: scatter_layout_left_name_team
+                            do_translation_y: False
+                            do_translation_x: False
+                            Label:
+                                id: team_nema_left_pos
+                                font_size_team_name_left: "20sp"
+                                font_size: self.font_size_team_name_left
+                                text: "NOMBRE EQUIPO"
+                                team_name_left_pos_x: 0
+                                team_name_left_pos_y: 0
+                                pos: (self.team_name_left_pos_x, self.team_name_left_pos_y)
+                            Label:
+                                id: team_points_left_pos
+                                text: "      0"
+                                font_size_points_left: "20sp"
+                                font_size: self.font_size_points_left
+                                team_points_left_pos_x: 450
+                                team_points_left_pos_y: -8
+                                pos: (self.team_points_left_pos_x, self.team_points_left_pos_y)
+                                size_hint: .2, 1.8
+                                canvas.before:
+                                    Rectangle:
+                                        pos: (self.pos[0] + 30, self.pos[1])
+                                        size: (self.size[0] - 30 , self.size[1])
+                                        source: 'resources/background/Interfaz_de_streaming-02.png'
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: .2, 1
+                    Label:
+                        id: timer_team
+                        font_size_timer: "30sp"
+                        font_size: self.font_size_timer
+                        text: "00:00"
+                        size_hint: 1, 4
+                        pos: (900, 100)
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-04.png'
+                    Label:
+                        id: match_team
+                        match_font_size: "30sp"
+                        font_size: self.match_font_size
+                        text: "0"
+                        size_hint: 1, 4
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-05.png'
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: 12
+                        spacing: 12
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: 'resources/background/Interfaz_de_streaming-06.png'
+                        ScatterLayout:
+                            id: scatter_layout_right_team
+                            do_translation_y: False
+                            do_translation_x: False
+                            Label:
+                                id: points_athlte_team_right_pos
+                                text: "0"
+                                font_size_athlete_team_right: "20sp"
+                                font_size: self.font_size_athlete_team_right
+                                points_athlte_team_right_pos_x: 2
+                                points_athlte_team_right_pos_y: -8
+                                pos: (self.points_athlte_team_right_pos_x, self.points_athlte_team_right_pos_y)
+                                size_hint: .2, 1.8
+                                canvas.before:
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        source: 'resources/background/Interfaz_de_streaming-07.png'
+                            Image:
+                                id: light_athlte_team_right_pos
+                                light_athlte_team_right_pos_x: 110
+                                light_athlte_team_right_pos_y: 1
+                                pos: (self.light_athlte_team_right_pos_x, self.light_athlte_team_right_pos_y)
+                                size_hint: .1, 1
+                                source: 'resources/background/luz_roja.png'
+                            Label:
+                                id: name_athlte_team_right_pos
+                                text: "NOMBRE ATLETA PAIS"
+                                font_size_athlete_team_right: "20sp"
+                                font_size: self.font_size_athlete_team_right
+                                name_athlte_team_right_pos_x: 130
+                                name_athlte_team_right_pos_y: 10
+                                pos: (self.name_athlte_team_right_pos_x, self.name_athlte_team_right_pos_y)
+                                size_hint: .5, .4
+                            Image:
+                                id: country_flags_team_right_pos
+                                country_flags_team_right_pos_x: 430
+                                country_flags_team_right_pos_y: -3
+                                pos: (self.country_flags_team_right_pos_x, self.country_flags_team_right_pos_y)
+                                size_hint: .3, 1.4
+                                source: "resources/flags/flags_inclined/FIN-derecha.png"
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: 12
+                        spacing: 12
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: (self.size[0] - 30, self.size[1])
+                                source: 'resources/background/Interfaz_de_streaming-06.png'
+                        ScatterLayout:
+                            id: scatter_layout_team_right
+                            do_translation_y: False
+                            do_translation_x: False
+                            Label:
+                                id: team_points_right_pos
+                                text: "0"
+                                font_size_team_points_right: "20sp"
+                                font_size: self.font_size_team_points_right
+                                team_points_right_pos_x: 2
+                                team_points_right_pos_y: -8
+                                pos: (self.team_points_right_pos_x, self.team_points_right_pos_y)
+                                size_hint: .2, 1.8
+                                canvas.before:
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: (self.size[0] - 30, self.size[1])
+                                        source: 'resources/background/Interfaz_de_streaming-07.png'
+                            Label:
+                                id: team_name_right_pos
+                                font_size_team_name_right: "20sp"
+                                font_size: self.font_size_team_name_right
+                                team_name_right_pos_x: 0
+                                team_name_right_pos_y: 0
+                                pos: (self.team_name_right_pos_x, self.team_name_right_pos_y)
+                                text: "NOMBRE EQUIPO"
+        BoxLayout:
+            id: box_barra_title
+            size_hint: 1, .3
+            BoxLayout
+                id: barra_title
+                orientation: "horizontal"
+                padding: 12
+                spacing: 12
+                whidth_barra_title_cambate: 49
+                size_x_barra_title_cambate: 100
+                canvas.before:
+                    Rectangle:
+                        pos: (self.pos[0] + self.whidth_barra_title_cambate, self.pos[1])
+                        size: (self.size[0] - self.size_x_barra_title_cambate, self.size[1])
+                        source: 'resources/background/Interfaz_de_streaming-08.png'
+                Label:
+                    id: title_combat
+                    font_size_title_combat: "25sp"
+                    font_size: self.font_size_title_combat
+                    text: "Barra titulo campeonato"
+

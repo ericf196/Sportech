@@ -1,0 +1,9 @@
+docutils >= 0.12
+pygments >= 2.1.3
+pypiwin32
+kivy.deps.sdl2 >= 0.1.12
+kivy.deps.glew >= 0.1.4
+kivy >= 1.9.1
+Zope.Interface >= 4.3.2
+PyOpenSSL >= 16.2.0
+Twisted >= 16.5.0
